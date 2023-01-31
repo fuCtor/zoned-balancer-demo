@@ -44,8 +44,8 @@ object Main extends com.twitter.app.App {
     val runner  = TestRunner(report, servers, requestCount * serverSize)
 
     val balancers = Seq(
-      "P2CZonedLeastLoaded[DC1]" -> ZonedBalancers.locality("dc1", rng = currentRng),
-      "P2CZonedLeastLoaded[DC2]" -> ZonedBalancers.locality("dc2", rng = currentRng)
+      "P2CZonedLeastLoaded[DC1]" -> ZonedBalancers.zoned("dc1", rng = currentRng),
+      "P2CZonedLeastLoaded[DC2]" -> ZonedBalancers.zoned("dc2", rng = currentRng)
     )
 
     val f = for {

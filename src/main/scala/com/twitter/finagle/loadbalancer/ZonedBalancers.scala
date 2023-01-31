@@ -1,7 +1,7 @@
 package com.twitter.finagle.loadbalancer
 
 import com.twitter.finagle._
-import com.twitter.finagle.loadbalancer.locality.ZonedLeastLoaded
+import com.twitter.finagle.loadbalancer.zoned.ZonedLeastLoaded
 import com.twitter.finagle.stats.StatsReceiver
 import com.twitter.finagle.util.Rng
 import com.twitter.util.{Activity, Future, Time}
@@ -30,8 +30,8 @@ object ZonedBalancers {
       }
     }
   }
-  def locality(datacenterName: String, rng: Rng = Rng.threadLocal): LoadBalancerFactory = new LoadBalancerFactory {
-    override def toString: String = "P2LocalityLeastLoaded"
+  def zoned(datacenterName: String, rng: Rng = Rng.threadLocal): LoadBalancerFactory = new LoadBalancerFactory {
+    override def toString: String = "P2ZonedLeastLoaded"
 
     def newBalancer[Req, Rep](endpoints: Activity[IndexedSeq[EndpointFactory[Req, Rep]]],
                               exc: NoBrokersAvailableException,
@@ -40,7 +40,7 @@ object ZonedBalancers {
       val sr        = params[param.Stats].statsReceiver
       val panicMode = params[PanicMode]
       val balancer  = new ZonedLeastLoaded(endpoints, panicMode, datacenterName, rng, sr, exc)
-      newScopedBal(params[param.Label].label, sr, "p2c_locality_least_loaded", balancer)
+      newScopedBal(params[param.Label].label, sr, "p2c_zoned_least_loaded", balancer)
     }
   }
 }

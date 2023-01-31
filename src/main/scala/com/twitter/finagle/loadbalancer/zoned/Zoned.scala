@@ -1,4 +1,4 @@
-package com.twitter.finagle.loadbalancer.locality
+package com.twitter.finagle.loadbalancer.zoned
 
 import com.twitter.finagle.loadbalancer.Balancer
 import com.twitter.finagle.util.Rng
